@@ -10,7 +10,7 @@
 
 - Steps:
     
-    1.Execute SQL in ```init.sql``` to create table using in the projects
+    1. Execute SQL in ```init.sql``` to create table using in the projects
 
 ## Version 2 approach
 
