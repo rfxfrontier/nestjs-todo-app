@@ -1,24 +1,23 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TodoService } from './todo.service';
-import { Logger } from '@nestjs/common';
-import { TodoItemDbModule } from 'src/database/todo-item-db/todo-item-db.module';
+import { TodoItemDbService } from './todo-item-db.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { TodoItem } from 'src/dao/TodoItem';
-import { TodoItemRepositoryFake } from 'src/database/todo-item-db/todo-item-db.mock';
+import { TodoItemDbModule } from './todo-item-db.module';
+import { TodoItemRepositoryFake } from './todo-item-db.mock';
 
-describe('TodoService', () => {
-    let service: TodoService;
+describe('TodoItemDbService', () => {
+    let service: TodoItemDbService;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             imports: [TodoItemDbModule],
-            providers: [TodoService, Logger],
+            providers: [],
         })
             .overrideProvider(getRepositoryToken(TodoItem))
             .useValue(TodoItemRepositoryFake)
             .compile();
 
-        service = module.get<TodoService>(TodoService);
+        service = module.get<TodoItemDbService>(TodoItemDbService);
     });
 
     it('should be defined', () => {

@@ -2,10 +2,14 @@ import { Injectable, Logger } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { CreateTodoReqDto } from './dto/create-todo.req.dto';
 import { CreateTodoRespDto } from './dto/create-todo.resp.dto';
+import { TodoItemDbService } from 'src/database/todo-item-db/todo-item-db.service';
 
 @Injectable()
 export class TodoService {
-    constructor(private logger: Logger) {}
+    constructor(
+        private logger: Logger,
+        private todoItemDbService: TodoItemDbService,
+    ) {}
 
     public async create(req: CreateTodoReqDto) {
         const itemId = randomUUID();
@@ -14,6 +18,7 @@ export class TodoService {
     }
 
     public async get(id: string) {
-        throw new Error('Method not implemented.');
+        const dbResult = await this.todoItemDbService.getById(id);
+        return dbResult;
     }
 }
