@@ -9,6 +9,7 @@ import {
 } from './todo-item-db.mock';
 import { DataSource, QueryRunner, Repository } from 'typeorm';
 import { Logger } from '@nestjs/common';
+import { ListTodoReqDto } from 'src/todo/dto/list-todo.req.dto';
 
 describe('TodoItemDbService', () => {
     let service: TodoItemDbService;
@@ -42,12 +43,19 @@ describe('TodoItemDbService', () => {
     });
 
     it('can getById', async () => {
-        jest.spyOn(repo, 'findOneOrFail').mockResolvedValueOnce(
+        jest.spyOn(repo, 'findOne').mockResolvedValueOnce(
             Object.assign(new TodoItem(), { itemId: 'item_id' }),
         );
         const result = await service.getById('item_id');
-        expect(repo.findOneOrFail).toHaveBeenCalledTimes(1);
+        expect(repo.findOne).toHaveBeenCalledTimes(1);
         expect(result.itemId).toEqual('item_id');
+    });
+
+    it('can search', async () => {
+        jest.spyOn(repo, 'find').mockResolvedValueOnce([]);
+        const result = await service.search(new ListTodoReqDto());
+        expect(repo.find).toHaveBeenCalledTimes(1);
+        expect(result.length).toEqual(0);
     });
 
     it('can deleteById', async () => {

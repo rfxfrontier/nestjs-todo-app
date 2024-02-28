@@ -2,6 +2,8 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TodoItem } from 'src/dao/TodoItem';
 import { DataSource, Repository } from 'typeorm';
+import { TodoItemDbUtil } from './todo-item-db.util';
+import { ListTodoReqDto } from 'src/todo/dto/list-todo.req.dto';
 
 @Injectable()
 export class TodoItemDbService {
@@ -16,6 +18,11 @@ export class TodoItemDbService {
         return await this.todoItemRepository.findOne({
             where: { itemId: itemId, isDeleted: false },
         });
+    }
+
+    public async search(req: ListTodoReqDto) {
+        const options = TodoItemDbUtil.buildSearchOptions(req)
+        return await this.todoItemRepository.find(options);
     }
 
     public async deleteById(todoItem: TodoItem, updateUser: string) {
