@@ -6,12 +6,12 @@ import { CreateTodoReqDto } from './dto/create-todo.req.dto';
 export class TodoController {
     constructor(private todoService: TodoService) {}
 
-    @Post('create')
+    @Post('')
     public async create(@Body() req: CreateTodoReqDto) {
         return await this.todoService.create(req);
     }
 
-    @Get('get/:id')
+    @Get(':id')
     public async get(@Param('id') id: string) {
         return await this.todoService.get(id);
     }
