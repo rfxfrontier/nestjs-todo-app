@@ -21,4 +21,13 @@ export class TodoService {
         const dbResult = await this.todoItemDbService.getById(id);
         return dbResult;
     }
+
+    public async delete(id: string) {
+        const itemTobeDeleted = await this.todoItemDbService.getById(id);
+        const dbResult = await this.todoItemDbService.deleteById(
+            itemTobeDeleted,
+            'USER',
+        );
+        return dbResult;
+    }
 }
