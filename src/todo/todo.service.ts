@@ -6,6 +6,7 @@ import { TodoItemDbService } from 'src/database/todo-item-db/todo-item-db.servic
 
 @Injectable()
 export class TodoService {
+    private defaultUser = "USER"
     constructor(
         private logger: Logger,
         private todoItemDbService: TodoItemDbService,
@@ -26,7 +27,7 @@ export class TodoService {
         const itemTobeDeleted = await this.todoItemDbService.getById(id);
         const dbResult = await this.todoItemDbService.deleteById(
             itemTobeDeleted,
-            'USER',
+            this.defaultUser,
         );
         return dbResult;
     }
