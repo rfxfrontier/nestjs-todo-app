@@ -1,6 +1,5 @@
 import { Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TodoItem } from 'src/dao/TodoItem';
 
 @Module({
     imports: [
@@ -27,7 +26,6 @@ import { TodoItem } from 'src/dao/TodoItem';
                 };
             },
         }),
-        TypeOrmModule.forFeature([TodoItem]),
     ],
     providers: [],
     exports: [],
