@@ -5,7 +5,6 @@ import { DataSource, Repository } from 'typeorm';
 
 @Injectable()
 export class TodoItemDbService {
-    // private dataSource: DataSource
     constructor(
         @InjectRepository(TodoItem)
         private todoItemRepository: Repository<TodoItem>,
