@@ -13,7 +13,7 @@ export class TodoItemDbService {
     ) {}
 
     public async getById(itemId: string) {
-        return await this.todoItemRepository.findOneOrFail({
+        return await this.todoItemRepository.findOne({
             where: { itemId: itemId, isDeleted: false },
         });
     }
