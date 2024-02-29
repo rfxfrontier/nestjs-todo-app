@@ -13,6 +13,8 @@ import { TodoItemDbService } from 'src/database/todo-item-db/todo-item-db.servic
 import { UserContxt } from 'src/user/dto/user-context.dto';
 import { UserRole } from 'src/user/dto/user.enum';
 import { CreateTodoReqDto } from './dto/create-todo.req.dto';
+import { SearchSortBy } from './todo.enum';
+import { ListTodoReqDto } from './dto/list-todo.req.dto';
 
 const mockUser: UserContxt = {
     userId: 'userId',
@@ -97,5 +99,19 @@ describe('TodoService', () => {
         expect(result.lastUpdatedTimeStr).toEqual(
             dbResult.lastUpdatedTime.toISOString(),
         );
+    });
+
+    it('can search', async () => {
+        const req: ListTodoReqDto = {
+            page: 1,
+            size: 5,
+            status: 0,
+            priority: 20,
+            sortBy: SearchSortBy.CREATION_TIME_DESC,
+        };
+
+        jest.spyOn(dbService, 'search').mockResolvedValueOnce([[], 0]);
+        const result = await service.search(req);
+        expect(result.data.length).toEqual(0);
     });
 });

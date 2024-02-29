@@ -36,7 +36,7 @@ export class TodoItemDbService {
 
     public async search(options: FindManyOptions<TodoItem>) {
         try {
-            return await this.todoItemRepository.find(options);
+            return await this.todoItemRepository.findAndCount(options);
         } catch (ex) {
             this.logger.error(`Failed in search item, error: ${ex.message}`);
             throw ex;

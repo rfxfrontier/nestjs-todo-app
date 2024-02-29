@@ -60,10 +60,12 @@ describe('TodoItemDbService', () => {
     });
 
     it('can search', async () => {
-        jest.spyOn(repo, 'find').mockResolvedValueOnce([]);
+        jest.spyOn(repo, 'findAndCount').mockResolvedValueOnce([[], 0]);
         const result = await service.search({ where: { isDeleted: false } });
-        expect(repo.find).toHaveBeenCalledTimes(1);
-        expect(result.length).toEqual(0);
+        expect(repo.findAndCount).toHaveBeenCalledTimes(1);
+        expect(result.length).toEqual(2);
+        expect(result[0].length).toEqual(0);
+        expect(result[1]).toEqual(0);
     });
 
     it('can deleteById', async () => {

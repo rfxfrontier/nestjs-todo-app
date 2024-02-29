@@ -31,9 +31,16 @@ export class TodoService {
     }
 
     public async search(req: ListTodoReqDto) {
+        const { page, size } = req;
         const options = TodoItemDbUtil.buildSearchOptions(req);
-        const searchResultList = await this.todoItemDbService.search(options);
-        return TodoItemUtil.convertToViewDtoList(searchResultList);
+        const [searchResultList, count] =
+            await this.todoItemDbService.search(options);
+        return {
+            page,
+            size,
+            count,
+            data: TodoItemUtil.convertToViewDtoList(searchResultList),
+        };
     }
 
     public async get(id: string) {
