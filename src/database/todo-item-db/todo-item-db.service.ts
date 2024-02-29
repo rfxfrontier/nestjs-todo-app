@@ -24,9 +24,14 @@ export class TodoItemDbService {
     }
 
     public async getById(itemId: string) {
-        return await this.todoItemRepository.findOne({
-            where: { itemId: itemId, isDeleted: false },
-        });
+        try {
+            return await this.todoItemRepository.findOne({
+                where: { itemId: itemId, isDeleted: false },
+            });
+        } catch (ex) {
+            this.logger.error(`Failed in getById, error: ${ex.message}`);
+            throw ex;
+        }
     }
 
     public async search(req: ListTodoReqDto) {
