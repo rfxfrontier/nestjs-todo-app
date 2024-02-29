@@ -8,10 +8,10 @@ export class ListTodoReqDto {
     @IsOptional()
     @IsNumber()
     @Min(1)
-    page: number = 1
+    page: number = 1;
 
     @IsOptional()
     @IsNumber()
     @Min(1)
-    size: number = 10
+    size: number = 10;
 }
