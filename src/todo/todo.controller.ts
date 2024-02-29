@@ -2,10 +2,21 @@ import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { CreateTodoReqDto } from './dto/create-todo.req.dto';
 import { ListTodoReqDto } from './dto/list-todo.req.dto';
+import { UserContxt } from 'src/user/dto/user-context.dto';
+import { UserRole } from 'src/user/dto/user.enum';
 
 @Controller('todo')
 export class TodoController {
-    constructor(private todoService: TodoService) {}
+    private defaultUser: UserContxt;
+
+    constructor(private todoService: TodoService) {
+        // initial value for demo
+        this.defaultUser = {
+            userId: '0c3c55f8-0921-45e0-ae03-508b5cd1441b',
+            userName: 'Admin',
+            userRole: UserRole.ADMIN,
+        };
+    }
 
     @Post('')
     public async create(@Body() req: CreateTodoReqDto) {
