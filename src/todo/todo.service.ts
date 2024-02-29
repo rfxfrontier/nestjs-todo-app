@@ -56,12 +56,9 @@ export class TodoService {
             throw new Error('Not Found.');
         }
 
-        await this.todoItemDbService.deleteById(
-            itemTobeDeleted,
-            user.userName,
-        );
+        await this.todoItemDbService.deleteById(itemTobeDeleted, user.userName);
         return {
-            isDeleted: true
-        }
+            isDeleted: true,
+        };
     }
 }
