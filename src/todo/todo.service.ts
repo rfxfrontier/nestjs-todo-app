@@ -10,7 +10,6 @@ import { TodoItemUtil } from './todo.util';
 
 @Injectable()
 export class TodoService {
-    private defaultUser = "USER"
     constructor(
         private logger: Logger,
         private todoItemDbService: TodoItemDbService,
@@ -51,12 +50,18 @@ export class TodoService {
         return TodoItemUtil.convertToViewDto(dbResult);
     }
 
-    public async delete(id: string) {
+    public async delete(id: string, user: UserContxt) {
         const itemTobeDeleted = await this.todoItemDbService.getById(id);
-        const dbResult = await this.todoItemDbService.deleteById(
+        if (itemTobeDeleted == null) {
+            throw new Error('Not Found.');
+        }
+
+        await this.todoItemDbService.deleteById(
             itemTobeDeleted,
-            this.defaultUser,
+            user.userName,
         );
-        return dbResult;
+        return {
+            isDeleted: true
+        }
     }
 }
