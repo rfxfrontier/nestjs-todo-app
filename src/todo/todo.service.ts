@@ -37,9 +37,9 @@ export class TodoService {
     public async get(id: string) {
         const dbResult = await this.todoItemDbService.getById(id);
         if (dbResult == null) {
-            throw new Error("Not Found.")
+            throw new Error('Not Found.');
         }
-        return dbResult;
+        return TodoItemUtil.convertToViewDto(dbResult);
     }
 
     public async delete(id: string) {

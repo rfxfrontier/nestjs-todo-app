@@ -75,4 +75,27 @@ describe('TodoService', () => {
             dbResult.lastUpdatedTime.toISOString(),
         );
     });
+
+    it('can get', async () => {
+        const dbResult = new TodoItem();
+        dbResult.name = 'dummy name';
+        dbResult.description = 'dummy description';
+        dbResult.dueDate = new Date('2024-03-06T16:00:00.000Z');
+        dbResult.creationTime = new Date();
+        dbResult.lastUpdatedTime = new Date();
+
+        jest.spyOn(dbService, 'getById').mockResolvedValueOnce(dbResult);
+
+        const result = await service.get('');
+
+        expect(result.name).toEqual(dbResult.name);
+        expect(result.description).toEqual(dbResult.description);
+        expect(result.dueDateStr).toEqual(dbResult.dueDate.toISOString());
+        expect(result.creationTimeStr).toEqual(
+            dbResult.creationTime.toISOString(),
+        );
+        expect(result.lastUpdatedTimeStr).toEqual(
+            dbResult.lastUpdatedTime.toISOString(),
+        );
+    });
 });
