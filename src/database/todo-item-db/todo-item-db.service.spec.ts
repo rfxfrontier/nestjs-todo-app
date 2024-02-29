@@ -42,6 +42,14 @@ describe('TodoItemDbService', () => {
         expect(service).toBeDefined();
     });
 
+    it('can create', async () => {
+        const item = Object.assign(new TodoItem(), { itemId: 'item_id' });
+        jest.spyOn(repo, 'save').mockResolvedValueOnce(item);
+        const result = await service.create(item);
+        expect(repo.save).toHaveBeenCalledTimes(1);
+        expect(result.itemId).toEqual('item_id');
+    });
+
     it('can getById', async () => {
         jest.spyOn(repo, 'findOne').mockResolvedValueOnce(
             Object.assign(new TodoItem(), { itemId: 'item_id' }),

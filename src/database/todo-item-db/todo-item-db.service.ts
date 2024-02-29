@@ -14,6 +14,15 @@ export class TodoItemDbService {
         private dataSource: DataSource,
     ) {}
 
+    public async create(item: TodoItem) {
+        try {
+            return await this.todoItemRepository.save(item);
+        } catch (ex) {
+            this.logger.error(`Failed in create item, error: ${ex.message}`);
+            throw ex;
+        }
+    }
+
     public async getById(itemId: string) {
         return await this.todoItemRepository.findOne({
             where: { itemId: itemId, isDeleted: false },

@@ -10,6 +10,7 @@ export const qrMock = {
 };
 
 export const TodoItemRepositoryMock = {
+    save: jest.fn(),
     find: jest.fn(),
     findOne: jest.fn(),
     findOneOrFail: jest.fn(),
