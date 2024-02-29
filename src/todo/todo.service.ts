@@ -7,6 +7,7 @@ import { ListTodoReqDto } from './dto/list-todo.req.dto';
 import { TodoItemDbUtil } from 'src/database/todo-item-db/todo-item-db.util';
 import { UserContxt } from 'src/user/dto/user-context.dto';
 import { TodoItemUtil } from './todo.util';
+import { CustomError } from 'src/core/custom-error';
 
 @Injectable()
 export class TodoService {
@@ -45,7 +46,7 @@ export class TodoService {
     public async get(id: string) {
         const dbResult = await this.todoItemDbService.getById(id);
         if (dbResult == null) {
-            throw new Error('Not Found.');
+            throw new CustomError(`Todo item not found`, 404, { id });
         }
         return TodoItemUtil.convertToViewDto(dbResult);
     }
