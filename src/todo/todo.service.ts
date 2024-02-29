@@ -4,6 +4,9 @@ import { CreateTodoReqDto } from './dto/create-todo.req.dto';
 import { CreateTodoRespDto } from './dto/create-todo.resp.dto';
 import { TodoItemDbService } from 'src/database/todo-item-db/todo-item-db.service';
 import { ListTodoReqDto } from './dto/list-todo.req.dto';
+import { TodoItemDbUtil } from 'src/database/todo-item-db/todo-item-db.util';
+import { UserContxt } from 'src/user/dto/user-context.dto';
+import { TodoItemUtil } from './todo.util';
 
 @Injectable()
 export class TodoService {
@@ -13,10 +16,18 @@ export class TodoService {
         private todoItemDbService: TodoItemDbService,
     ) {}
 
-    public async create(req: CreateTodoReqDto) {
-        const itemId = randomUUID();
-        this.logger.log(`Create with id ${itemId}`);
-        return new CreateTodoRespDto(itemId);
+    public async create(req: CreateTodoReqDto, user: UserContxt) {
+        const itemToBeCreated = TodoItemDbUtil.buildTodoItem(
+            req,
+            randomUUID(),
+            user,
+        );
+        this.logger.log(
+            `Create with id ${itemToBeCreated.itemId} by ${itemToBeCreated.createdBy}`,
+        );
+        const itemCreated =
+            await this.todoItemDbService.create(itemToBeCreated);
+        return TodoItemUtil.convertToViewDto(itemCreated);
     }
 
     public async search(req: ListTodoReqDto) {

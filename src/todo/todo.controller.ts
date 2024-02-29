@@ -20,7 +20,7 @@ export class TodoController {
 
     @Post('')
     public async create(@Body() req: CreateTodoReqDto) {
-        return await this.todoService.create(req);
+        return await this.todoService.create(req, this.defaultUser);
     }
 
     @Post('search')
