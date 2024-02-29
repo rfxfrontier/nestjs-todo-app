@@ -30,7 +30,7 @@ export class TodoItemDbService {
     }
 
     public async search(req: ListTodoReqDto) {
-        const options = TodoItemDbUtil.buildSearchOptions(req)
+        const options = TodoItemDbUtil.buildSearchOptions(req);
         return await this.todoItemRepository.find(options);
     }
 
