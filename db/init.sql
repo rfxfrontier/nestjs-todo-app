@@ -19,7 +19,9 @@ CREATE TABLE IF NOT EXISTS todo_app.todo_item (
   PRIMARY KEY (`item_id`),
   KEY `status` (`status`),
   KEY `priority` (`priority`),
-  KEY `due_date` (`due_date`)
+  KEY `due_date` (`due_date`),
+  KEY `creation_time` (`creation_time`),
+  KEY `last_updated_time` (`last_updated_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8 COLLATE=UTF8_UNICODE_CI;
 
 CREATE TABLE IF NOT EXISTS todo_app.user (

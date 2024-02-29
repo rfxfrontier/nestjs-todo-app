@@ -3,6 +3,8 @@ import { Column, Entity, Index } from 'typeorm';
 @Index('status', ['status'], {})
 @Index('priority', ['priority'], {})
 @Index('due_date', ['dueDate'], {})
+@Index('creation_time', ['creationTime'], {})
+@Index('last_updated_time', ['lastUpdatedTime'], {})
 @Entity('todo_item', { schema: 'todo_app' })
 export class TodoItem {
     @Column('varchar', { primary: true, name: 'item_id', length: 100 })
