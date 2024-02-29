@@ -61,7 +61,7 @@ describe('TodoItemDbService', () => {
 
     it('can search', async () => {
         jest.spyOn(repo, 'find').mockResolvedValueOnce([]);
-        const result = await service.search(new ListTodoReqDto());
+        const result = await service.search({ where: { isDeleted: false } });
         expect(repo.find).toHaveBeenCalledTimes(1);
         expect(result.length).toEqual(0);
     });

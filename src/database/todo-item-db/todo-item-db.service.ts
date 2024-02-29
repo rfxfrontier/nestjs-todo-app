@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TodoItem } from 'src/dao/TodoItem';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, FindManyOptions, Repository } from 'typeorm';
 import { TodoItemDbUtil } from './todo-item-db.util';
 import { ListTodoReqDto } from 'src/todo/dto/list-todo.req.dto';
 
@@ -34,9 +34,13 @@ export class TodoItemDbService {
         }
     }
 
-    public async search(req: ListTodoReqDto) {
-        const options = TodoItemDbUtil.buildSearchOptions(req);
-        return await this.todoItemRepository.find(options);
+    public async search(options: FindManyOptions<TodoItem>) {
+        try {
+            return await this.todoItemRepository.find(options);
+        } catch (ex) {
+            this.logger.error(`Failed in search item, error: ${ex.message}`);
+            throw ex;
+        }
     }
 
     public async deleteById(todoItem: TodoItem, updateUser: string) {

@@ -31,7 +31,9 @@ export class TodoService {
     }
 
     public async search(req: ListTodoReqDto) {
-        return await this.todoItemDbService.search(req);
+        const options = TodoItemDbUtil.buildSearchOptions(req);
+        const searchResultList = await this.todoItemDbService.search(options);
+        return TodoItemUtil.convertToViewDtoList(searchResultList);
     }
 
     public async get(id: string) {
