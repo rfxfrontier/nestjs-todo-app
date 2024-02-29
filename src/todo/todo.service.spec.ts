@@ -52,7 +52,7 @@ describe('TodoService', () => {
 
     it('can create', async () => {
         const req: CreateTodoReqDto = {
-            name: 'dummt name',
+            name: 'dummy name',
             description: 'dummy description',
             dueDateStr: '2024-03-06T16:00:00.000Z',
         };
