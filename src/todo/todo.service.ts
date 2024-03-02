@@ -52,7 +52,11 @@ export class TodoService {
         return TodoItemUtil.convertToViewDto(dbResult);
     }
 
-    public async update(itemId: string, req: UpdateTodoReqDto, userContext: UserContxt) {
+    public async update(
+        itemId: string,
+        req: UpdateTodoReqDto,
+        userContext: UserContxt,
+    ) {
         const itemTobeUpdated = await this.todoItemDbService.getById(itemId);
         if (itemTobeUpdated == null) {
             throw new CustomError(`Todo item not found`, 404, { itemId });

@@ -127,13 +127,13 @@ describe('TodoService', () => {
         jest.spyOn(dbService, 'getById').mockResolvedValueOnce(dbResult);
         jest.spyOn(dbService, 'update').mockResolvedValueOnce(dbResult);
 
-        const req = new UpdateTodoReqDto()
-        req.itemId = "itemId"
-        req.name = dbResult.name
-        req.dueDateStr = dbResult.dueDate.toISOString()
+        const req = new UpdateTodoReqDto();
+        req.itemId = 'itemId';
+        req.name = dbResult.name;
+        req.dueDateStr = dbResult.dueDate.toISOString();
 
         const result = await service.update(req, mockUser);
-        
+
         expect(result.name).toEqual(dbResult.name);
         expect(result.description).toEqual(dbResult.description);
         expect(result.dueDateStr).toEqual(dbResult.dueDate.toISOString());
