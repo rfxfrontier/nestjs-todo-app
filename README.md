@@ -21,7 +21,7 @@ $ docker pull mariadb:10.5.21
 # run container
 $ docker run --name mariadb-todo-test -e MYSQL_ROOT_PASSWORD={DB_PASSWORD} -p {DB_PORT}:3306 -d docker.io/library/mariadb:10.5.21
 
-# login maraidb for sql preparation
+# login maraidb console for sql preparation
 $ docker exec -it mariadb-todo-test mariadb --user root -p{DB_PASSWORD}
 ```
 
