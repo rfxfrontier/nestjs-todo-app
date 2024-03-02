@@ -40,6 +40,8 @@ MariaDB [(none)]> SHOW TABLES FROM todo_app;
 2 rows in set (0.000 sec)
 ```
 
+4. Run ```exit``` from mariadb console to exit
+
 ## Application
 
 ### Installation
@@ -86,6 +88,7 @@ $ yarn run start:prod
 $ yarn run test
 
 # e2e tests
+# note: requires valid database connection setup, otherwise result in timeout errors
 $ yarn run test:e2e
 ```
 
