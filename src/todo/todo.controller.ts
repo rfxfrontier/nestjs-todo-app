@@ -14,7 +14,10 @@ import { ListTodoReqDto } from './dto/list-todo.req.dto';
 import { UserContxt } from 'src/user/dto/user-context.dto';
 import { UserRole } from 'src/user/dto/user.enum';
 import { UpdateTodoReqDto } from './dto/update-todo.req.dto';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { TodoItemViewDto } from './dto/todo-item-view.dto';
 
+@ApiTags('todo')
 @Controller('todo')
 export class TodoController {
     private defaultUser: UserContxt;
@@ -35,24 +38,37 @@ export class TodoController {
     }
 
     @Post('')
+    @ApiOperation({ summary: 'Create todo list item, using user role ADMIN' })
     @HttpCode(201)
     public async create(@Body() req: CreateTodoReqDto) {
         return await this.todoService.create(req, this.defaultUser);
     }
 
     @Post('search')
+    @ApiOperation({
+        summary: 'Search todo list item, support paging, filtering and sorting',
+    })
     @HttpCode(200)
     public async search(@Body() req: ListTodoReqDto) {
         return await this.todoService.search(req);
     }
 
     @Get(':id')
+    @ApiOperation({ summary: 'Get todo list item by id' })
+    @ApiResponse({
+        status: 200,
+        description: 'The found todo list item',
+        type: TodoItemViewDto,
+    })
     @HttpCode(200)
     public async get(@Param('id') id: string) {
         return await this.todoService.get(id);
     }
 
     @Patch(':id')
+    @ApiOperation({
+        summary: 'Update todo list item by id, using user role ADMIN',
+    })
     @HttpCode(200)
     public async update(
         @Param('id') itemId: string,
@@ -62,6 +78,9 @@ export class TodoController {
     }
 
     @Patch('normal-user/:id')
+    @ApiOperation({
+        summary: 'Update todo list item by id, using user role NORMAL',
+    })
     @HttpCode(200)
     public async normalUserUpdate(
         @Param('id') itemId: string,
@@ -71,6 +90,9 @@ export class TodoController {
     }
 
     @Delete(':id')
+    @ApiOperation({
+        summary: 'Soft delete todo list item by id, using user role ADMIN',
+    })
     @HttpCode(200)
     public async delete(@Param('id') id: string) {
         return await this.todoService.delete(id, this.defaultUser);
