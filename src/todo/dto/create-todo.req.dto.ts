@@ -1,11 +1,5 @@
 import { Transform } from 'class-transformer';
-import {
-    IsDateString,
-    IsNotEmpty,
-    IsString,
-    MaxLength,
-    isISO8601,
-} from 'class-validator';
+import { IsDateString, IsNotEmpty, IsString, MaxLength } from 'class-validator';
 
 export class CreateTodoReqDto {
     @IsString()
