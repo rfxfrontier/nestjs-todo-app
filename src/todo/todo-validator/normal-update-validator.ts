@@ -30,6 +30,9 @@ export class NormalUpdateValidator {
     protected validateStatus() {
         const { status: statusFrom } = this.todoItem;
         const { status: statusTo } = this.req;
+        if (!statusTo) {
+            return;
+        }
         const transitionMatrix = this.getStatusTransitionMatrix();
         if (!transitionMatrix[statusFrom]) {
             throw new CustomError(
@@ -48,6 +51,9 @@ export class NormalUpdateValidator {
 
     protected validatePriority() {
         const { priority } = this.req;
+        if (!priority) {
+            return;
+        }
         if (priority == PriorityEnum.HIGH) {
             throw new CustomError(
                 `${this.userRole} user do not allow update priority to ${PriorityEnum[PriorityEnum.HIGH]}`,
@@ -58,6 +64,9 @@ export class NormalUpdateValidator {
 
     protected validateDueDate() {
         const { dueDateStr } = this.req;
+        if (!dueDateStr) {
+            return;
+        }
         const dueDate = new Date(dueDateStr);
         const currentDate = new Date();
         if (currentDate.getTime() >= dueDate.getTime()) {
