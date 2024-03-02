@@ -19,6 +19,14 @@ export class TodoService {
         private todoItemDbService: TodoItemDbService,
     ) {}
 
+    private async getTodoItemByIdOrFail(itemId: string) {
+        const dbResult = await this.todoItemDbService.getById(itemId);
+        if (dbResult == null) {
+            throw new CustomError(`Todo item not found`, 404, { itemId });
+        }
+        return dbResult;
+    }
+
     public async create(req: CreateTodoReqDto, user: UserContxt) {
         const itemToBeCreated = TodoItemDbUtil.buildTodoItem(
             req,
@@ -50,10 +58,7 @@ export class TodoService {
     }
 
     public async get(itemId: string) {
-        const dbResult = await this.todoItemDbService.getById(itemId);
-        if (dbResult == null) {
-            throw new CustomError(`Todo item not found`, 404, { itemId });
-        }
+        const dbResult = await this.getTodoItemByIdOrFail(itemId);
         return TodoItemUtil.convertToViewDto(dbResult);
     }
 
@@ -62,11 +67,7 @@ export class TodoService {
         req: UpdateTodoReqDto,
         userContext: UserContxt,
     ) {
-        const itemTobeUpdated = await this.todoItemDbService.getById(itemId);
-        if (itemTobeUpdated == null) {
-            throw new CustomError(`Todo item not found`, 404, { itemId });
-        }
-
+        const itemTobeUpdated = await this.getTodoItemByIdOrFail(itemId);
         const validator = TodoValidatorFactory.getUpdateReqValidator(
             userContext,
             itemTobeUpdated,
@@ -86,12 +87,8 @@ export class TodoService {
         return TodoItemUtil.convertToViewDto(updatedResult);
     }
 
-    public async delete(id: string, user: UserContxt) {
-        const itemTobeDeleted = await this.todoItemDbService.getById(id);
-        if (itemTobeDeleted == null) {
-            throw new Error('Not Found.');
-        }
-
+    public async delete(itemId: string, user: UserContxt) {
+        const itemTobeDeleted = await this.getTodoItemByIdOrFail(itemId);
         await this.todoItemDbService.deleteById(itemTobeDeleted, user.userName);
         return {
             isDeleted: true,
