@@ -3,6 +3,7 @@ import {
     Controller,
     Delete,
     Get,
+    HttpCode,
     Param,
     Patch,
     Post,
@@ -34,21 +35,25 @@ export class TodoController {
     }
 
     @Post('')
+    @HttpCode(201)
     public async create(@Body() req: CreateTodoReqDto) {
         return await this.todoService.create(req, this.defaultUser);
     }
 
     @Post('search')
+    @HttpCode(200)
     public async search(@Body() req: ListTodoReqDto) {
         return await this.todoService.search(req);
     }
 
     @Get(':id')
+    @HttpCode(200)
     public async get(@Param('id') id: string) {
         return await this.todoService.get(id);
     }
 
     @Patch(':id')
+    @HttpCode(200)
     public async update(
         @Param('id') itemId: string,
         @Body() req: UpdateTodoReqDto,
@@ -57,6 +62,7 @@ export class TodoController {
     }
 
     @Patch('normal-user/:id')
+    @HttpCode(200)
     public async normalUserUpdate(
         @Param('id') itemId: string,
         @Body() req: UpdateTodoReqDto,
@@ -65,6 +71,7 @@ export class TodoController {
     }
 
     @Delete(':id')
+    @HttpCode(200)
     public async delete(@Param('id') id: string) {
         return await this.todoService.delete(id, this.defaultUser);
     }
