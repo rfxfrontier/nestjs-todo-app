@@ -9,6 +9,7 @@ import { UserContxt } from 'src/user/dto/user-context.dto';
 import { TodoItemUtil } from './todo.util';
 import { CustomError } from 'src/core/custom-error';
 import { UpdateTodoReqDto } from './dto/update-todo.req.dto';
+import { TodoValidatorFactory } from './todo-validator/todo-validator.factory';
 
 @Injectable()
 export class TodoService {
@@ -62,7 +63,12 @@ export class TodoService {
             throw new CustomError(`Todo item not found`, 404, { itemId });
         }
 
-        // validate req, TBC
+        const validator = TodoValidatorFactory.getUpdateReqValidator(
+            userContext,
+            itemTobeUpdated,
+            req,
+        );
+        validator.validate();
 
         const partialEntity = TodoItemDbUtil.buildUpdateOptions(
             req,
