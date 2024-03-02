@@ -121,6 +121,7 @@ describe('TodoService', () => {
         dbResult.name = 'dummy name';
         dbResult.description = 'dummy description';
         dbResult.dueDate = new Date('2024-03-06T16:00:00.000Z');
+        dbResult.status = StatusEnum.NOT_STARTED;
         dbResult.creationTime = new Date();
         dbResult.lastUpdatedTime = new Date();
 
@@ -128,11 +129,11 @@ describe('TodoService', () => {
         jest.spyOn(dbService, 'update').mockResolvedValueOnce(dbResult);
 
         const req = new UpdateTodoReqDto();
-        req.itemId = 'itemId';
         req.name = dbResult.name;
+        req.status = dbResult.status;
         req.dueDateStr = dbResult.dueDate.toISOString();
 
-        const result = await service.update(req, mockUser);
+        const result = await service.update('itemId', req, mockUser);
 
         expect(result.name).toEqual(dbResult.name);
         expect(result.description).toEqual(dbResult.description);
