@@ -13,7 +13,7 @@ import { TodoItemDbService } from 'src/database/todo-item-db/todo-item-db.servic
 import { UserContxt } from 'src/user/dto/user-context.dto';
 import { UserRole } from 'src/user/dto/user.enum';
 import { CreateTodoReqDto } from './dto/create-todo.req.dto';
-import { SearchSortBy } from './todo.enum';
+import { SearchSortBy, StatusEnum } from './todo.enum';
 import { ListTodoReqDto } from './dto/list-todo.req.dto';
 import { UpdateTodoReqDto } from './dto/update-todo.req.dto';
 
@@ -26,6 +26,11 @@ const mockUser: UserContxt = {
 describe('TodoService', () => {
     let service: TodoService;
     let dbService: TodoItemDbService;
+
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2024, 1, 1));
+    });
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -144,5 +149,27 @@ describe('TodoService', () => {
         expect(result.lastUpdatedTimeStr).toEqual(
             dbResult.lastUpdatedTime.toISOString(),
         );
+    });
+
+    it('can not update when could not pass validation', async () => {
+        const dbResult = new TodoItem();
+        dbResult.name = 'dummy name';
+        dbResult.description = 'dummy description';
+        dbResult.dueDate = new Date('2023-12-31T16:00:00.000Z');
+        dbResult.status = StatusEnum.NOT_STARTED;
+        dbResult.creationTime = new Date();
+        dbResult.lastUpdatedTime = new Date();
+
+        jest.spyOn(dbService, 'getById').mockResolvedValueOnce(dbResult);
+        jest.spyOn(dbService, 'update').mockResolvedValueOnce(dbResult);
+
+        const req = new UpdateTodoReqDto();
+        req.status = dbResult.status;
+
+        try {
+            await service.update('itemId', req, mockUser);
+        } catch (ex) {
+            expect(ex).toThrow();
+        }
     });
 });
