@@ -17,6 +17,7 @@ import { UpdateTodoReqDto } from './dto/update-todo.req.dto';
 @Controller('todo')
 export class TodoController {
     private defaultUser: UserContxt;
+    private normalUser: UserContxt;
 
     constructor(private todoService: TodoService) {
         // initial value for demo
@@ -24,6 +25,11 @@ export class TodoController {
             userId: '0c3c55f8-0921-45e0-ae03-508b5cd1441b',
             userName: 'Admin',
             userRole: UserRole.ADMIN,
+        };
+        this.normalUser = {
+            userId: '5eee6ead-5249-43a3-9883-df2d92f68efd',
+            userName: 'John Smith',
+            userRole: UserRole.NORMAL,
         };
     }
 
@@ -48,6 +54,14 @@ export class TodoController {
         @Body() req: UpdateTodoReqDto,
     ) {
         return await this.todoService.update(itemId, req, this.defaultUser);
+    }
+
+    @Patch('normal-user/:id')
+    public async normalUserUpdate(
+        @Param('id') itemId: string,
+        @Body() req: UpdateTodoReqDto,
+    ) {
+        return await this.todoService.update(itemId, req, this.normalUser);
     }
 
     @Delete(':id')
