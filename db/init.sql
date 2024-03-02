@@ -1,8 +1,8 @@
-# Create database
+-- 1. Create database
 
 CREATE DATABASE IF NOT EXISTS todo_app;
 
-# Create table
+-- 2. Create table todo_item
 
 CREATE TABLE IF NOT EXISTS todo_app.todo_item (
   `item_id` varchar(100) NOT NULL,
@@ -23,6 +23,8 @@ CREATE TABLE IF NOT EXISTS todo_app.todo_item (
   KEY `creation_time` (`creation_time`),
   KEY `last_updated_time` (`last_updated_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8 COLLATE=UTF8_UNICODE_CI;
+
+-- 3. Create table user
 
 CREATE TABLE IF NOT EXISTS todo_app.user (
   `user_id` varchar(100) NOT NULL,
