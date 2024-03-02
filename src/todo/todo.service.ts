@@ -43,10 +43,10 @@ export class TodoService {
         };
     }
 
-    public async get(id: string) {
-        const dbResult = await this.todoItemDbService.getById(id);
+    public async get(itemId: string) {
+        const dbResult = await this.todoItemDbService.getById(itemId);
         if (dbResult == null) {
-            throw new CustomError(`Todo item not found`, 404, { id });
+            throw new CustomError(`Todo item not found`, 404, { itemId });
         }
         return TodoItemUtil.convertToViewDto(dbResult);
     }
