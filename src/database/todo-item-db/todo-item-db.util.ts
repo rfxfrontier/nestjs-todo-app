@@ -1,3 +1,4 @@
+import { CustomError } from 'src/core/custom-error';
 import { TodoItem } from 'src/dao/TodoItem';
 import { CreateTodoReqDto } from 'src/todo/dto/create-todo.req.dto';
 import { ListTodoReqDto } from 'src/todo/dto/list-todo.req.dto';
@@ -68,5 +69,22 @@ export class TodoItemDbUtil {
             where,
             order,
         };
+    }
+
+    public static checkIsSameLastUpdatedTime(
+        itemTobeUpdated: TodoItem,
+        itemJustBeforeUpdate: TodoItem,
+    ) {
+        // check same last updated time, for race condition check
+        if (
+            itemTobeUpdated.lastUpdatedTime.getTime() !=
+            itemJustBeforeUpdate.lastUpdatedTime.getTime()
+        ) {
+            const { itemId, lastUpdatedBy } = itemJustBeforeUpdate;
+            throw new CustomError(`Record is updated by others`, 403, {
+                id: itemId,
+                lastUpdatedBy,
+            });
+        }
     }
 }

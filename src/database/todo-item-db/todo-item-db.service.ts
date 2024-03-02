@@ -43,21 +43,22 @@ export class TodoItemDbService {
         }
     }
 
-    public async deleteById(todoItem: TodoItem, updateUser: string) {
+    public async deleteById(itemTobeUpdated: TodoItem, updateUser: string) {
         const qr = this.dataSource.createQueryRunner();
         await qr.startTransaction();
         try {
-            const { itemId } = todoItem;
-            const itemTobeUpdated = await qr.manager.findOneOrFail(TodoItem, {
-                where: { itemId, isDeleted: false },
-            });
-            // check same last updated time
-            if (
-                itemTobeUpdated.lastUpdatedTime.getTime() !=
-                todoItem.lastUpdatedTime.getTime()
-            ) {
-                throw new Error('record is updated by others ');
-            }
+            const { itemId } = itemTobeUpdated;
+            const itemJustBeforeUpdate = await qr.manager.findOneOrFail(
+                TodoItem,
+                {
+                    where: { itemId, isDeleted: false },
+                },
+            );
+
+            TodoItemDbUtil.checkIsSameLastUpdatedTime(
+                itemTobeUpdated,
+                itemJustBeforeUpdate,
+            );
 
             await qr.manager.update(
                 TodoItem,
