@@ -10,6 +10,7 @@ import {
 import { DataSource, QueryRunner, Repository } from 'typeorm';
 import { Logger } from '@nestjs/common';
 import { ListTodoReqDto } from 'src/todo/dto/list-todo.req.dto';
+import { TodoItemDbUtil } from './todo-item-db.util';
 
 describe('TodoItemDbService', () => {
     let service: TodoItemDbService;
@@ -66,6 +67,25 @@ describe('TodoItemDbService', () => {
         expect(result.length).toEqual(2);
         expect(result[0].length).toEqual(0);
         expect(result[1]).toEqual(0);
+    });
+
+    it('can update', async () => {
+        jest.spyOn(dataSource, 'createQueryRunner').mockReturnValueOnce(
+            qrMock as unknown as QueryRunner,
+        );
+
+        const lastUpdatedTime = new Date();
+        const item = Object.assign(new TodoItem(), {
+            itemId: 'item_id',
+            lastUpdatedTime,
+        });
+        jest.spyOn(qrMock.manager, 'findOneOrFail')
+            .mockImplementationOnce(() => Promise.resolve(item))
+            .mockImplementationOnce(() => Promise.resolve(item));
+
+        await service.update(item, { name: 'Updated' });
+        expect(qrMock.manager.findOneOrFail).toHaveBeenCalledTimes(2);
+        expect(qrMock.manager.update).toHaveBeenCalledTimes(1);
     });
 
     it('can deleteById', async () => {

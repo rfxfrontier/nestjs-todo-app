@@ -4,6 +4,7 @@ import { TodoItem } from 'src/dao/TodoItem';
 import { DataSource, FindManyOptions, Repository } from 'typeorm';
 import { TodoItemDbUtil } from './todo-item-db.util';
 import { ListTodoReqDto } from 'src/todo/dto/list-todo.req.dto';
+import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 
 @Injectable()
 export class TodoItemDbService {
@@ -40,6 +41,44 @@ export class TodoItemDbService {
         } catch (ex) {
             this.logger.error(`Failed in search item, error: ${ex.message}`);
             throw ex;
+        }
+    }
+
+    public async update(
+        itemTobeUpdated: TodoItem,
+        partialEntity: QueryDeepPartialEntity<TodoItem>,
+    ) {
+        const qr = this.dataSource.createQueryRunner();
+        await qr.startTransaction();
+        try {
+            const { itemId } = itemTobeUpdated;
+            const itemJustBeforeUpdate = await qr.manager.findOneOrFail(
+                TodoItem,
+                {
+                    where: { itemId, isDeleted: false },
+                },
+            );
+
+            TodoItemDbUtil.checkIsSameLastUpdatedTime(
+                itemTobeUpdated,
+                itemJustBeforeUpdate,
+            );
+
+            await qr.manager.update(TodoItem, { itemId }, partialEntity);
+
+            const result = await qr.manager.findOneOrFail(TodoItem, {
+                where: { itemId, isDeleted: false },
+            });
+
+            await qr.commitTransaction();
+
+            return result;
+        } catch (ex) {
+            this.logger.error(`Error in udpate todoItem, error: ${ex.message}`);
+            await qr.rollbackTransaction();
+            throw ex;
+        } finally {
+            await qr.release();
         }
     }
 

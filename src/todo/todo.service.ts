@@ -8,6 +8,7 @@ import { TodoItemDbUtil } from 'src/database/todo-item-db/todo-item-db.util';
 import { UserContxt } from 'src/user/dto/user-context.dto';
 import { TodoItemUtil } from './todo.util';
 import { CustomError } from 'src/core/custom-error';
+import { UpdateTodoReqDto } from './dto/update-todo.req.dto';
 
 @Injectable()
 export class TodoService {
@@ -49,6 +50,26 @@ export class TodoService {
             throw new CustomError(`Todo item not found`, 404, { itemId });
         }
         return TodoItemUtil.convertToViewDto(dbResult);
+    }
+
+    public async update(itemId: string, req: UpdateTodoReqDto, userContext: UserContxt) {
+        const itemTobeUpdated = await this.todoItemDbService.getById(itemId);
+        if (itemTobeUpdated == null) {
+            throw new CustomError(`Todo item not found`, 404, { itemId });
+        }
+
+        // validate req, TBC
+
+        const partialEntity = TodoItemDbUtil.buildUpdateOptions(
+            req,
+            userContext,
+        );
+        const updatedResult = await this.todoItemDbService.update(
+            itemTobeUpdated,
+            partialEntity,
+        );
+
+        return TodoItemUtil.convertToViewDto(updatedResult);
     }
 
     public async delete(id: string, user: UserContxt) {

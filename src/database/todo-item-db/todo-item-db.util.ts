@@ -2,9 +2,11 @@ import { CustomError } from 'src/core/custom-error';
 import { TodoItem } from 'src/dao/TodoItem';
 import { CreateTodoReqDto } from 'src/todo/dto/create-todo.req.dto';
 import { ListTodoReqDto } from 'src/todo/dto/list-todo.req.dto';
+import { UpdateTodoReqDto } from 'src/todo/dto/update-todo.req.dto';
 import { SearchSortBy } from 'src/todo/todo.enum';
 import { UserContxt } from 'src/user/dto/user-context.dto';
 import { FindManyOptions, FindOptionsOrder, FindOptionsWhere } from 'typeorm';
+import { QueryPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 
 export class TodoItemDbUtil {
     public static buildTodoItem(
@@ -69,6 +71,34 @@ export class TodoItemDbUtil {
             where,
             order,
         };
+    }
+
+    public static buildUpdateOptions(
+        req: UpdateTodoReqDto,
+        userContext: UserContxt,
+    ): QueryPartialEntity<TodoItem> {
+        let partialEntity: QueryPartialEntity<TodoItem> = {
+            lastUpdatedBy: userContext.userName,
+        };
+
+        const { name, description, status, priority, dueDateStr } = req;
+
+        if (name != undefined) {
+            partialEntity.name = name;
+        }
+        if (description != undefined) {
+            partialEntity.description = description;
+        }
+        if (status != undefined) {
+            partialEntity.status = status;
+        }
+        if (priority != undefined) {
+            partialEntity.priority = priority;
+        }
+        if (dueDateStr != undefined) {
+            partialEntity.dueDate = new Date(dueDateStr);
+        }
+        return partialEntity;
     }
 
     public static checkIsSameLastUpdatedTime(
