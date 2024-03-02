@@ -155,21 +155,22 @@ describe('TodoService', () => {
         const dbResult = new TodoItem();
         dbResult.name = 'dummy name';
         dbResult.description = 'dummy description';
-        dbResult.dueDate = new Date('2023-12-31T16:00:00.000Z');
+        dbResult.dueDate = new Date('2024-12-31T16:00:00.000Z');
         dbResult.status = StatusEnum.NOT_STARTED;
         dbResult.creationTime = new Date();
         dbResult.lastUpdatedTime = new Date();
 
         jest.spyOn(dbService, 'getById').mockResolvedValueOnce(dbResult);
-        jest.spyOn(dbService, 'update').mockResolvedValueOnce(dbResult);
 
         const req = new UpdateTodoReqDto();
-        req.status = dbResult.status;
+        req.status = StatusEnum.COMPLETED;
 
         try {
             await service.update('itemId', req, mockUser);
         } catch (ex) {
-            expect(ex).toThrow();
+            expect(ex.message).toEqual(
+                'ADMIN user do not allow update status from NOT_STARTED to COMPLETED',
+            );
         }
     });
 });
