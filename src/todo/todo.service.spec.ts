@@ -83,6 +83,21 @@ describe('TodoService', () => {
         );
     });
 
+    it('can not create when could not pass validation', async () => {
+        const req: CreateTodoReqDto = {
+            name: 'dummy name',
+            description: 'dummy description',
+            dueDateStr: '2022-03-06T16:00:00.000Z',
+        };
+        try {
+            await service.create(req, mockUser);
+        } catch (ex) {
+            expect(ex.message).toEqual(
+                'Current date (2024-01-31T16:00:00.000Z) is greater then input due date (2022-03-06T16:00:00.000Z)',
+            );
+        }
+    });
+
     it('can get', async () => {
         const dbResult = new TodoItem();
         dbResult.name = 'dummy name';

@@ -10,6 +10,7 @@ import { TodoItemUtil } from './todo.util';
 import { CustomError } from 'src/core/custom-error';
 import { UpdateTodoReqDto } from './dto/update-todo.req.dto';
 import { TodoValidatorFactory } from './todo-validator/todo-validator.factory';
+import { CreateTodoValidator } from './todo-validator/create-validator';
 
 @Injectable()
 export class TodoService {
@@ -27,6 +28,9 @@ export class TodoService {
         this.logger.log(
             `Create with id ${itemToBeCreated.itemId} by ${itemToBeCreated.createdBy}`,
         );
+        const validator = new CreateTodoValidator(req);
+        validator.validate();
+
         const itemCreated =
             await this.todoItemDbService.create(itemToBeCreated);
         return TodoItemUtil.convertToViewDto(itemCreated);
