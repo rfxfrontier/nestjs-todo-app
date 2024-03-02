@@ -33,10 +33,10 @@ export class TodoItemDbUtil {
         let where: FindOptionsWhere<TodoItem> = {
             isDeleted: false,
         };
-        if (status) {
+        if (status != undefined) {
             where = Object.assign(where, { status });
         }
-        if (priority) {
+        if (priority != undefined) {
             where = Object.assign(where, { priority });
         }
 
