@@ -4,7 +4,7 @@ import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { CustomValidationPipe } from 'src/core/custom-validation-pipe';
 
-describe('AppController (e2e)', () => {
+describe('TodoController (e2e)', () => {
     let app: INestApplication;
     let itemId = null
 
