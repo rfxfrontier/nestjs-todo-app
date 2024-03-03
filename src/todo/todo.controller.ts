@@ -100,25 +100,71 @@ export class TodoController {
         return await this.todoService.get(id);
     }
 
-    @Patch(':id')
+    @Patch(':itemId')
     @ApiOperation({
         summary: 'Update todo list item by id, using user role ADMIN',
     })
+    @ApiParam({
+        name: 'itemId',
+        required: true,
+        description: 'Id of todo list item',
+        example: 'c6ec679a-747b-4576-9db5-c6f33687f48',
+        type: 'string',
+    })
+    @ApiResponse({
+        status: 200,
+        description: 'The updated todo list item',
+        type: TodoItemViewDto,
+    })
+    @ApiResponse({
+        status: 403,
+        description:
+            'Operation forbidden response, eg: database record is accessed by others at the same time',
+        type: ExceptionRespDto,
+    })
+    @ApiResponse({
+        status: 404,
+        description: 'Not found response',
+        type: ExceptionRespDto,
+    })
     @HttpCode(200)
     public async update(
-        @Param('id') itemId: string,
+        @Param('itemId') itemId: string,
         @Body() req: UpdateTodoReqDto,
     ) {
         return await this.todoService.update(itemId, req, this.defaultUser);
     }
 
-    @Patch('normal-user/:id')
+    @Patch('normal-user/:itemId')
     @ApiOperation({
         summary: 'Update todo list item by id, using user role NORMAL',
     })
+    @ApiParam({
+        name: 'itemId',
+        required: true,
+        description: 'Id of todo list item',
+        example: 'c6ec679a-747b-4576-9db5-c6f33687f48',
+        type: 'string',
+    })
+    @ApiResponse({
+        status: 200,
+        description: 'The updated todo list item',
+        type: TodoItemViewDto,
+    })
+    @ApiResponse({
+        status: 403,
+        description:
+            'Operation forbidden response, eg: database record is accessed by others at the same time',
+        type: ExceptionRespDto,
+    })
+    @ApiResponse({
+        status: 404,
+        description: 'Not found response',
+        type: ExceptionRespDto,
+    })
     @HttpCode(200)
     public async normalUserUpdate(
-        @Param('id') itemId: string,
+        @Param('itemId') itemId: string,
         @Body() req: UpdateTodoReqDto,
     ) {
         return await this.todoService.update(itemId, req, this.normalUser);
