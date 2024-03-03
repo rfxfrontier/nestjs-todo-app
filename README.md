@@ -54,7 +54,7 @@ $ yarn install
 ### Configuration
 
 1. Create file ```.env``` in root directory with following environment variables
-    - replace {DB_PASSWORD}, {DB_PORT} with set in [Prepare Database](#prepare-database)
+    - replace {DB_PASSWORD}, {DB_PORT} with value defined in [Prepare Database](#prepare-database)
     - Please find an example in [.env-example](.env-example)
 
 ```
@@ -94,7 +94,7 @@ $ yarn run test:e2e
 
 ### Clean up
 
-- database images
+- database container
 
 ```
 $ docker stop mariadb-todo-test
