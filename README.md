@@ -11,7 +11,7 @@
 
 ## Prepare Database
 
-1. Docker commands to pull mariadb images, run container and login maraidb for sql preparation
+1. Docker commands to pull mariadb image, run container and login maraidb console for sql preparation
    - replace {DB_PASSWORD}, {DB_PORT} with preferred db password and port
 
 ```bash
