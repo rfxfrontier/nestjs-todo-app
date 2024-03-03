@@ -17,9 +17,20 @@ import { UserRole } from 'src/user/dto/user.enum';
 import { UpdateTodoReqDto } from './dto/update-todo.req.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TodoItemViewDto } from './dto/todo-item-view.dto';
+import { ExceptionRespDto } from 'src/core/dto/exception.resp.dto';
 
 @ApiTags('todo')
 @Controller('todo')
+@ApiResponse({
+    status: 400,
+    description: 'Error response',
+    type: ExceptionRespDto,
+})
+@ApiResponse({
+    status: 500,
+    description: 'Unhandled Error response',
+    type: ExceptionRespDto,
+})
 export class TodoController {
     private defaultUser: UserContxt;
     private normalUser: UserContxt;
