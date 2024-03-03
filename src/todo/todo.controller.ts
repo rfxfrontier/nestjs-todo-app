@@ -77,7 +77,7 @@ export class TodoController {
     }
 
     @Get(':itemId')
-    @ApiOperation({ summary: 'Get todo list item by id' })
+    @ApiOperation({ summary: 'Get todo list item by itemId' })
     @ApiParam({
         name: 'itemId',
         required: true,
@@ -102,7 +102,7 @@ export class TodoController {
 
     @Patch(':itemId')
     @ApiOperation({
-        summary: 'Update todo list item by id, using user role ADMIN',
+        summary: 'Update todo list item by itemId, using user role ADMIN',
     })
     @ApiParam({
         name: 'itemId',
@@ -137,7 +137,7 @@ export class TodoController {
 
     @Patch('normal-user/:itemId')
     @ApiOperation({
-        summary: 'Update todo list item by id, using user role NORMAL',
+        summary: 'Update todo list item by itemId, using user role NORMAL',
     })
     @ApiParam({
         name: 'itemId',
@@ -172,7 +172,7 @@ export class TodoController {
 
     @Delete(':itemId')
     @ApiOperation({
-        summary: 'Soft delete todo list item by id, using user role ADMIN',
+        summary: 'Soft delete todo list item by itemId, using user role ADMIN',
     })
     @ApiParam({
         name: 'itemId',

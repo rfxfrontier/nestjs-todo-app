@@ -50,11 +50,11 @@ describe('TodoController (e2e)', () => {
             .expect(200);
     });
 
-    it('/todo/:id (GET)', async () => {
+    it('/todo/:itemId (GET)', async () => {
         return request(app.getHttpServer()).get(`/todo/${itemId}`).expect(200);
     });
 
-    it('/todo/:id (PATCH)', async () => {
+    it('/todo/:itemId (PATCH)', async () => {
         const payload = {
             name: 'test name - updated',
             description: 'test description - updated',
@@ -66,7 +66,7 @@ describe('TodoController (e2e)', () => {
             .expect(200);
     });
 
-    it('/todo/:id (DELETE)', async () => {
+    it('/todo/:itemId (DELETE)', async () => {
         return request(app.getHttpServer())
             .delete(`/todo/${itemId}`)
             .expect(200);
