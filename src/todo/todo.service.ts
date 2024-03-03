@@ -1,7 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { CreateTodoReqDto } from './dto/create-todo.req.dto';
-import { CreateTodoRespDto } from './dto/create-todo.resp.dto';
 import { TodoItemDbService } from 'src/database/todo-item-db/todo-item-db.service';
 import { ListTodoReqDto } from './dto/list-todo.req.dto';
 import { TodoItemDbUtil } from 'src/database/todo-item-db/todo-item-db.util';
