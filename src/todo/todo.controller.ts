@@ -51,6 +51,11 @@ export class TodoController {
 
     @Post('')
     @ApiOperation({ summary: 'Create todo list item, using user role ADMIN' })
+    @ApiResponse({
+        status: 201,
+        description: 'The created todo list item',
+        type: TodoItemViewDto,
+    })
     @HttpCode(201)
     public async create(@Body() req: CreateTodoReqDto) {
         return await this.todoService.create(req, this.defaultUser);

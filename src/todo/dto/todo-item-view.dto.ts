@@ -34,21 +34,23 @@ export class TodoItemViewDto {
     status: number;
 
     @ApiProperty({
-        example: "NOT_STARTED",
-        description: 'The status description of the todo list item, can be 0: NOT_STARTED | 1: IN_PROGRESS | 2: COMPLETED | 9: BLOCKED',
+        example: 'NOT_STARTED',
+        description:
+            'The status description of the todo list item, can be 0: NOT_STARTED | 1: IN_PROGRESS | 2: COMPLETED | 9: BLOCKED',
     })
     statusStr: string;
 
     @ApiProperty({
         enum: PriorityEnum,
-        example: 10,
+        example: 20,
         description: 'The priority of the todo list item',
     })
     priority: number;
 
     @ApiProperty({
-        example: "MEDIUM",
-        description: 'The status description of the todo list item, can be 10: HIGH | 20: MEDIUM | 30: LOW',
+        example: 'MEDIUM',
+        description:
+            'The status description of the todo list item, can be 10: HIGH | 20: MEDIUM | 30: LOW',
     })
     priorityStr: string;
 
@@ -60,7 +62,8 @@ export class TodoItemViewDto {
 
     @ApiProperty({
         example: '2024-03-06T16:00:00.000Z',
-        description: 'Creation datetime string in UTC timezone in ISO8601 format',
+        description:
+            'Creation datetime string in UTC timezone in ISO8601 format',
     })
     creationTimeStr: string;
 
@@ -72,7 +75,8 @@ export class TodoItemViewDto {
 
     @ApiProperty({
         example: '2024-03-06T16:00:00.000Z',
-        description: 'Last updated datetime string in UTC timezone in ISO8601 format',
+        description:
+            'Last updated datetime string in UTC timezone in ISO8601 format',
     })
     lastUpdatedTimeStr: string;
 }
