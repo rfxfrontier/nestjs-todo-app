@@ -2,6 +2,7 @@ import { ArgumentsHost, Catch, Logger } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
 import { Response } from 'express';
 import { CustomError } from './custom-error';
+import { ExceptionRespDto } from './dto/exception.resp.dto';
 
 @Catch()
 export class GlobalExceptionsFilter extends BaseExceptionFilter {
@@ -38,13 +39,8 @@ export class GlobalExceptionsFilter extends BaseExceptionFilter {
             }
         }
 
-        res.status(statusCode).json({
-            error: {
-                errorMsg,
-                statusCode,
-                metadata,
-                timestamp: new Date().toISOString(),
-            },
-        });
+        res.status(statusCode).json(
+            new ExceptionRespDto(errorMsg, new Date().toISOString(), metadata),
+        );
     }
 }
