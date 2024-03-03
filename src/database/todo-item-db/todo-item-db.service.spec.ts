@@ -9,8 +9,6 @@ import {
 } from './todo-item-db.mock';
 import { DataSource, QueryRunner, Repository } from 'typeorm';
 import { Logger } from '@nestjs/common';
-import { ListTodoReqDto } from 'src/todo/dto/list-todo.req.dto';
-import { TodoItemDbUtil } from './todo-item-db.util';
 
 describe('TodoItemDbService', () => {
     let service: TodoItemDbService;

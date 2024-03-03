@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TodoItem } from 'src/dao/TodoItem';
 import { DataSource, FindManyOptions, Repository } from 'typeorm';
 import { TodoItemDbUtil } from './todo-item-db.util';
-import { ListTodoReqDto } from 'src/todo/dto/list-todo.req.dto';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 
 @Injectable()
