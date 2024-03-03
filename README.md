@@ -54,7 +54,7 @@ $ yarn install
 ### Configuration
 
 1. Create file ```.env``` in root directory with following environment variables
-    - replace {DB_PASSWORD}, {DB_PORT} with value defined in [Prepare Database](#prepare-database)
+    - replace {DB_PASSWORD}, {DB_PORT} with values defined in [Prepare Database](#prepare-database)
     - Please find an example in [.env-example](.env-example)
 
 ```
@@ -68,7 +68,7 @@ DB_USER=root
 DB_PASSWORD={DB_PASSWORD}
 ```
 
-### Running the application
+### Running the application locally
 
 ```bash
 # development mode
