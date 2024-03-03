@@ -76,15 +76,27 @@ export class TodoController {
         return await this.todoService.search(req);
     }
 
-    @Get(':id')
+    @Get(':itemId')
     @ApiOperation({ summary: 'Get todo list item by id' })
+    @ApiParam({
+        name: 'itemId',
+        required: true,
+        description: 'Id of todo list item',
+        example: 'c6ec679a-747b-4576-9db5-c6f33687f48',
+        type: 'string',
+    })
     @ApiResponse({
         status: 200,
         description: 'The found todo list item',
         type: TodoItemViewDto,
     })
+    @ApiResponse({
+        status: 404,
+        description: 'Not found response',
+        type: ExceptionRespDto,
+    })
     @HttpCode(200)
-    public async get(@Param('id') id: string) {
+    public async get(@Param('itemId') id: string) {
         return await this.todoService.get(id);
     }
 
