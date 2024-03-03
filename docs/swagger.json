@@ -1,0 +1,726 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/todo": {
+            "post": {
+                "operationId": "TodoController_create",
+                "summary": "Create todo list item, using user role ADMIN",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateTodoReqDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "The created todo list item",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TodoItemViewDto"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionRespDto"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandled Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionRespDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "todo"
+                ]
+            }
+        },
+        "/todo/search": {
+            "post": {
+                "operationId": "TodoController_search",
+                "summary": "Search todo list item, support paging, filtering and sorting",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SearchTodoReqDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Search result with page index, size and record counts",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SearchTodoRespDto"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionRespDto"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandled Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionRespDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "todo"
+                ]
+            }
+        },
+        "/todo/{itemId}": {
+            "get": {
+                "operationId": "TodoController_get",
+                "summary": "Get todo list item by itemId",
+                "parameters": [
+                    {
+                        "name": "itemId",
+                        "required": true,
+                        "in": "path",
+                        "description": "Id of todo list item",
+                        "example": "c6ec679a-747b-4576-9db5-c6f33687f48",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The found todo list item",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TodoItemViewDto"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionRespDto"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionRespDto"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandled Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionRespDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "todo"
+                ]
+            },
+            "patch": {
+                "operationId": "TodoController_update",
+                "summary": "Update todo list item by itemId, using user role ADMIN",
+                "parameters": [
+                    {
+                        "name": "itemId",
+                        "required": true,
+                        "in": "path",
+                        "description": "Id of todo list item",
+                        "example": "c6ec679a-747b-4576-9db5-c6f33687f48",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateTodoReqDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The updated todo list item",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TodoItemViewDto"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionRespDto"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Operation forbidden response, eg: database record is accessed by others at the same time",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionRespDto"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionRespDto"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandled Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionRespDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "todo"
+                ]
+            },
+            "delete": {
+                "operationId": "TodoController_delete",
+                "summary": "Soft delete todo list item by itemId, using user role ADMIN",
+                "parameters": [
+                    {
+                        "name": "itemId",
+                        "required": true,
+                        "in": "path",
+                        "description": "Id of todo list item",
+                        "example": "c6ec679a-747b-4576-9db5-c6f33687f48",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation complete response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationCompleteRespDto"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionRespDto"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Operation forbidden response, eg: database record is accessed by others at the same time",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionRespDto"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionRespDto"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandled Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionRespDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "todo"
+                ]
+            }
+        },
+        "/todo/normal-user/{itemId}": {
+            "patch": {
+                "operationId": "TodoController_normalUserUpdate",
+                "summary": "Update todo list item by itemId, using user role NORMAL",
+                "parameters": [
+                    {
+                        "name": "itemId",
+                        "required": true,
+                        "in": "path",
+                        "description": "Id of todo list item",
+                        "example": "c6ec679a-747b-4576-9db5-c6f33687f48",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateTodoReqDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The updated todo list item",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TodoItemViewDto"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionRespDto"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Operation forbidden response, eg: database record is accessed by others at the same time",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionRespDto"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionRespDto"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandled Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionRespDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "todo"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "Todo List API Application",
+        "description": "Swagger document for Todo List API Application",
+        "version": "1.0",
+        "contact": {}
+    },
+    "tags": [
+        {
+            "name": "todo",
+            "description": ""
+        }
+    ],
+    "servers": [],
+    "components": {
+        "schemas": {
+            "ExceptionMetadataDto": {
+                "type": "object",
+                "properties": {
+                    "itemId": {
+                        "type": "string",
+                        "example": "615cf455-9ad6-45f7-8f2b-448dd5e621b8",
+                        "description": "The id of the todo list item"
+                    },
+                    "actionBy": {
+                        "type": "string",
+                        "example": "Admin",
+                        "description": "The id of the todo list item"
+                    }
+                }
+            },
+            "ExceptionRespDto": {
+                "type": "object",
+                "properties": {
+                    "errorMsg": {
+                        "type": "string",
+                        "example": "Error message",
+                        "description": "error message"
+                    },
+                    "timestamp": {
+                        "type": "string",
+                        "example": "2024-03-02T15:45:06.836Z",
+                        "description": "error response datetime string in UTC timezone in ISO8601 format"
+                    },
+                    "metadata": {
+                        "$ref": "#/components/schemas/ExceptionMetadataDto"
+                    }
+                },
+                "required": [
+                    "errorMsg",
+                    "timestamp"
+                ]
+            },
+            "CreateTodoReqDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Todo item name",
+                        "description": "Todo item name",
+                        "maxLength": 256
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Todo item description",
+                        "description": "Todo item description",
+                        "maxLength": 4096
+                    },
+                    "dueDateStr": {
+                        "type": "string",
+                        "example": "2024-03-06T16:00:00.000Z",
+                        "description": "Due datetime string in UTC timezone in ISO8601 format, can not be earlier then create time"
+                    }
+                },
+                "required": [
+                    "name",
+                    "description",
+                    "dueDateStr"
+                ]
+            },
+            "TodoItemViewDto": {
+                "type": "object",
+                "properties": {
+                    "itemId": {
+                        "type": "string",
+                        "example": "615cf455-9ad6-45f7-8f2b-448dd5e621b8",
+                        "description": "The id of the todo list item"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Todo item name",
+                        "description": "The name of the todo list item"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Todo item description",
+                        "description": "The description of the todo list item"
+                    },
+                    "dueDateStr": {
+                        "type": "string",
+                        "example": "2024-03-06T16:00:00.000Z",
+                        "description": "Due datetime string in UTC timezone in ISO8601 format"
+                    },
+                    "status": {
+                        "type": "number",
+                        "enum": [
+                            0,
+                            1,
+                            2,
+                            9
+                        ],
+                        "example": 0,
+                        "description": "The status of the todo list item"
+                    },
+                    "statusStr": {
+                        "type": "string",
+                        "example": "NOT_STARTED",
+                        "description": "The status description of the todo list item, can be 0: NOT_STARTED | 1: IN_PROGRESS | 2: COMPLETED | 9: BLOCKED"
+                    },
+                    "priority": {
+                        "type": "number",
+                        "enum": [
+                            10,
+                            20,
+                            30
+                        ],
+                        "example": 20,
+                        "description": "The priority of the todo list item"
+                    },
+                    "priorityStr": {
+                        "type": "string",
+                        "example": "MEDIUM",
+                        "description": "The status description of the todo list item, can be 10: HIGH | 20: MEDIUM | 30: LOW"
+                    },
+                    "createdBy": {
+                        "type": "string",
+                        "example": "John Smith",
+                        "description": "Created by username"
+                    },
+                    "creationTimeStr": {
+                        "type": "string",
+                        "example": "2024-03-06T16:00:00.000Z",
+                        "description": "Creation datetime string in UTC timezone in ISO8601 format"
+                    },
+                    "lastUpdatedBy": {
+                        "type": "string",
+                        "example": "John Smith",
+                        "description": "Last updated by username"
+                    },
+                    "lastUpdatedTimeStr": {
+                        "type": "string",
+                        "example": "2024-03-06T16:00:00.000Z",
+                        "description": "Last updated datetime string in UTC timezone in ISO8601 format"
+                    }
+                },
+                "required": [
+                    "itemId",
+                    "name",
+                    "description",
+                    "dueDateStr",
+                    "status",
+                    "statusStr",
+                    "priority",
+                    "priorityStr",
+                    "createdBy",
+                    "creationTimeStr",
+                    "lastUpdatedBy",
+                    "lastUpdatedTimeStr"
+                ]
+            },
+            "SearchTodoReqDto": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "number",
+                        "example": 0,
+                        "enum": [
+                            0,
+                            1,
+                            2,
+                            9
+                        ],
+                        "description": "Status of todo list item, can be 0: NOT_STARTED | 1: IN_PROGRESS | 2: COMPLETED | 9: BLOCKED"
+                    },
+                    "priority": {
+                        "type": "number",
+                        "example": 20,
+                        "enum": [
+                            10,
+                            20,
+                            30
+                        ],
+                        "description": "Priority of todo list item, can be 10: HIGH | 20: MEDIUM | 30: LOW"
+                    },
+                    "page": {
+                        "type": "number",
+                        "example": 1,
+                        "description": "Number of page of the search result",
+                        "default": 1,
+                        "minimum": 1
+                    },
+                    "size": {
+                        "type": "number",
+                        "example": 5,
+                        "default": 5,
+                        "minimum": 1,
+                        "description": "Page size of the search result"
+                    },
+                    "sortBy": {
+                        "type": "string",
+                        "example": "CREATION_TIME_DESC",
+                        "default": 5,
+                        "enum": [
+                            "DUE_DATE",
+                            "DUE_DATE_DESC",
+                            "CREATION_TIME",
+                            "CREATION_TIME_DESC",
+                            "LAST_UPDATED_TIME",
+                            "LAST_UPDATED_TIME_DESC"
+                        ],
+                        "description": "Sorting opton of the search result"
+                    }
+                }
+            },
+            "SearchTodoRespDto": {
+                "type": "object",
+                "properties": {
+                    "page": {
+                        "type": "number",
+                        "example": 1,
+                        "description": "Number of page of the search result",
+                        "default": 1,
+                        "minimum": 1
+                    },
+                    "size": {
+                        "type": "number",
+                        "example": 5,
+                        "default": 5,
+                        "minimum": 1,
+                        "description": "Page size of the search result"
+                    },
+                    "count": {
+                        "type": "number",
+                        "example": 10,
+                        "minimum": 0,
+                        "description": "Count of todo item of the search result"
+                    },
+                    "data": {
+                        "description": "List of todo item, converted to view model",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TodoItemViewDto"
+                        }
+                    }
+                },
+                "required": [
+                    "page",
+                    "size",
+                    "count",
+                    "data"
+                ]
+            },
+            "UpdateTodoReqDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Todo item name",
+                        "description": "Todo item name",
+                        "maxLength": 256
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Todo item description",
+                        "description": "Todo item description",
+                        "maxLength": 4096
+                    },
+                    "dueDateStr": {
+                        "type": "string",
+                        "example": "2024-03-06T16:00:00.000Z",
+                        "description": "Due datetime string in UTC timezone in ISO8601 format, can not be earlier then create time"
+                    },
+                    "status": {
+                        "type": "number",
+                        "example": 0,
+                        "enum": [
+                            0,
+                            1,
+                            2,
+                            9
+                        ],
+                        "description": "Status of todo list item, can be 0: NOT_STARTED | 1: IN_PROGRESS | 2: COMPLETED | 9: BLOCKED, additional validation per user role and existing status"
+                    },
+                    "priority": {
+                        "type": "number",
+                        "example": 20,
+                        "enum": [
+                            10,
+                            20,
+                            30
+                        ],
+                        "description": "Priority of todo list item, can be 10: HIGH | 20: MEDIUM | 30: LOW, only Admin user can set priority to HIGH"
+                    }
+                }
+            },
+            "OperationCompleteRespDto": {
+                "type": "object",
+                "properties": {
+                    "isSuccess": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Boolean indicates operation is success"
+                    }
+                },
+                "required": [
+                    "isSuccess"
+                ]
+            }
+        }
+    }
+}
