@@ -614,7 +614,7 @@
                     "sortBy": {
                         "type": "string",
                         "example": "CREATION_TIME_DESC",
-                        "default": 5,
+                        "default": "CREATION_TIME_DESC",
                         "enum": [
                             "DUE_DATE",
                             "DUE_DATE_DESC",

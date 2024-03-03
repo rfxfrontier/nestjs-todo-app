@@ -51,7 +51,7 @@ export class SearchTodoReqDto {
     @IsEnum(SearchSortBy)
     @ApiPropertyOptional({
         example: 'CREATION_TIME_DESC',
-        default: 5,
+        default: 'CREATION_TIME_DESC',
         enum: SearchSortBy,
         description: 'Sorting opton of the search result',
     })
