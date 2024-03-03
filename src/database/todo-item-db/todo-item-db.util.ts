@@ -1,7 +1,7 @@
 import { CustomError } from 'src/core/custom-error';
 import { TodoItem } from 'src/dao/TodoItem';
 import { CreateTodoReqDto } from 'src/todo/dto/create-todo.req.dto';
-import { ListTodoReqDto } from 'src/todo/dto/list-todo.req.dto';
+import { SearchTodoReqDto } from 'src/todo/dto/search-todo.req.dto';
 import { UpdateTodoReqDto } from 'src/todo/dto/update-todo.req.dto';
 import { SearchSortBy } from 'src/todo/todo.enum';
 import { UserContxt } from 'src/user/dto/user-context.dto';
@@ -26,7 +26,7 @@ export class TodoItemDbUtil {
     }
 
     public static buildSearchOptions(
-        req: ListTodoReqDto,
+        req: SearchTodoReqDto,
     ): FindManyOptions<TodoItem> {
         const { page, size, status, priority, sortBy } = req;
 

@@ -2,7 +2,8 @@ import { Injectable, Logger } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { CreateTodoReqDto } from './dto/create-todo.req.dto';
 import { TodoItemDbService } from 'src/database/todo-item-db/todo-item-db.service';
-import { ListTodoReqDto } from './dto/list-todo.req.dto';
+import { SearchTodoReqDto } from './dto/search-todo.req.dto';
+import { SearchTodoRespDto } from './dto/search-todo.resp.dto';
 import { TodoItemDbUtil } from 'src/database/todo-item-db/todo-item-db.util';
 import { UserContxt } from 'src/user/dto/user-context.dto';
 import { TodoItemUtil } from './todo.util';
@@ -43,7 +44,7 @@ export class TodoService {
         return TodoItemUtil.convertToViewDto(itemCreated);
     }
 
-    public async search(req: ListTodoReqDto) {
+    public async search(req: SearchTodoReqDto): Promise<SearchTodoRespDto> {
         const { page, size } = req;
         const options = TodoItemDbUtil.buildSearchOptions(req);
         const [searchResultList, count] =

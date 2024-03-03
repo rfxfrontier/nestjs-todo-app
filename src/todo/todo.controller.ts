@@ -10,7 +10,8 @@ import {
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { CreateTodoReqDto } from './dto/create-todo.req.dto';
-import { ListTodoReqDto } from './dto/list-todo.req.dto';
+import { SearchTodoReqDto } from './dto/search-todo.req.dto';
+import { SearchTodoRespDto } from './dto/search-todo.resp.dto';
 import { UserContxt } from 'src/user/dto/user-context.dto';
 import { UserRole } from 'src/user/dto/user.enum';
 import { UpdateTodoReqDto } from './dto/update-todo.req.dto';
@@ -48,8 +49,13 @@ export class TodoController {
     @ApiOperation({
         summary: 'Search todo list item, support paging, filtering and sorting',
     })
+    @ApiResponse({
+        status: 200,
+        description: 'Search result with page index, size and record counts',
+        type: SearchTodoRespDto,
+    })
     @HttpCode(200)
-    public async search(@Body() req: ListTodoReqDto) {
+    public async search(@Body() req: SearchTodoReqDto) {
         return await this.todoService.search(req);
     }
 

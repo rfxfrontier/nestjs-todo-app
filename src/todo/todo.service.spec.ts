@@ -13,7 +13,7 @@ import { UserContxt } from 'src/user/dto/user-context.dto';
 import { UserRole } from 'src/user/dto/user.enum';
 import { CreateTodoReqDto } from './dto/create-todo.req.dto';
 import { SearchSortBy, StatusEnum } from './todo.enum';
-import { ListTodoReqDto } from './dto/list-todo.req.dto';
+import { SearchTodoReqDto } from './dto/search-todo.req.dto';
 import { UpdateTodoReqDto } from './dto/update-todo.req.dto';
 
 const mockUser: UserContxt = {
@@ -122,7 +122,7 @@ describe('TodoService', () => {
     });
 
     it('can search', async () => {
-        const req: ListTodoReqDto = {
+        const req: SearchTodoReqDto = {
             page: 1,
             size: 5,
             status: 0,
