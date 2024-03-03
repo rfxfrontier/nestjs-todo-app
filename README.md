@@ -1,6 +1,6 @@
 # nestjs-todo-app
 
-## Prerequisite 
+## Prerequisites
 
 - Node.js version: v20.11.1
    - https://nodejs.org/en/learn/getting-started/how-to-install-nodejs
@@ -11,7 +11,7 @@
 
 ## Prepare Database
 
-1. Docker commands to pull mariadb image, run container and login maraidb console for sql preparation
+1. Docker commands to pull mariadb image, run container and login mariadb console for sql preparation
    - replace {DB_PASSWORD}, {DB_PORT} with preferred db password and port
 
 ```bash
@@ -21,7 +21,7 @@ $ docker pull mariadb:10.5.21
 # run container
 $ docker run --name mariadb-todo-test -e MYSQL_ROOT_PASSWORD={DB_PASSWORD} -p {DB_PORT}:3306 -d docker.io/library/mariadb:10.5.21
 
-# login maraidb console for sql preparation
+# login mariadb console for sql preparation
 $ docker exec -it mariadb-todo-test mariadb --user root -p{DB_PASSWORD}
 ```
 
@@ -94,7 +94,7 @@ $ yarn run test:e2e
 
 
 
-### Dcoument 
+### Document 
 
 - for Swagger document, please find at [docs/swagger.json](docs/swagger.json)
    - Alternatively, after running the service, access [http://localhost:3000/api](http://localhost:3000/api) for testing the api in Swagger document ui
