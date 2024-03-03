@@ -15,9 +15,10 @@ import { SearchTodoRespDto } from './dto/search-todo.resp.dto';
 import { UserContxt } from 'src/user/dto/user-context.dto';
 import { UserRole } from 'src/user/dto/user.enum';
 import { UpdateTodoReqDto } from './dto/update-todo.req.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TodoItemViewDto } from './dto/todo-item-view.dto';
 import { ExceptionRespDto } from 'src/core/dto/exception.resp.dto';
+import { OperationCompleteRespDto } from './dto/operation-complete.resp.dto';
 
 @ApiTags('todo')
 @Controller('todo')
@@ -111,12 +112,42 @@ export class TodoController {
         return await this.todoService.update(itemId, req, this.normalUser);
     }
 
-    @Delete(':id')
+    @Delete(':itemId')
     @ApiOperation({
         summary: 'Soft delete todo list item by id, using user role ADMIN',
     })
+    @ApiParam({
+        name: 'itemId',
+        required: true,
+        description: 'Id of todo list item',
+        example: 'c6ec679a-747b-4576-9db5-c6f33687f48',
+        type: 'string',
+    })
+    @ApiParam({
+        name: 'itemId',
+        required: true,
+        description: 'Id of todo list item',
+        example: 'c6ec679a-747b-4576-9db5-c6f33687f48',
+        type: 'string',
+    })
+    @ApiResponse({
+        status: 200,
+        description: 'Operation complete response',
+        type: OperationCompleteRespDto,
+    })
+    @ApiResponse({
+        status: 403,
+        description:
+            'Operation forbidden response, eg: database record is accessed by others at the same time',
+        type: ExceptionRespDto,
+    })
+    @ApiResponse({
+        status: 404,
+        description: 'Not found response',
+        type: ExceptionRespDto,
+    })
     @HttpCode(200)
-    public async delete(@Param('id') id: string) {
+    public async delete(@Param('itemId') id: string) {
         return await this.todoService.delete(id, this.defaultUser);
     }
 }
