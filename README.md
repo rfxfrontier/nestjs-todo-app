@@ -92,6 +92,27 @@ $ yarn run test
 $ yarn run test:e2e
 ```
 
+
+
+### Dcoument 
+
+- for Swagger document, please find at [docs/swagger.json](docs/swagger.json)
+   - Alternatively, after running the service, access [http://localhost:3000/api](http://localhost:3000/api) for testing the api in Swagger document ui
+- Notes for ```PATCH /todo/:itemId``` and ```PATCH /normal-user/todo/:itemId```
+   - For the additional checking of property ```status``` per user role, please refer below table:
+   
+      | user role | status from       | status allowed                        |
+      |-----------|-------------------|---------------------------------------|
+      | ADMIN     | ```NOT_STARTED``` | ```NOT_STARTED, IN_PROGRESS```        |
+      | ADMIN     | ```IN_PROGRESS``` | ```IN_PROGRESS, COMPLETED, BLOCKED``` |
+      | ADMIN     | ```COMPLETED```   | ```IN_PROGRESS, COMPLETED```          |
+      | ADMIN     | ```BLOCKED```     | ```IN_PROGRESS, BLOCKED```            |
+      | NORMAL    | ```NOT_STARTED``` | ```NOT_STARTED, IN_PROGRESS```        |
+      | NORMAL    | ```IN_PROGRESS``` | ```IN_PROGRESS, COMPLETED```          |
+      | NORMAL    | ```COMPLETED```   | ```COMPLETED```                       |
+      | NORMAL    | ```BLOCKED```     | ```IN_PROGRESS, BLOCKED```            |
+
+
 ### Clean up
 
 - database container
