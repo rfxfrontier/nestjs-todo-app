@@ -56,8 +56,20 @@ describe('TodoController (e2e)', () => {
 
     it('/todo/:itemId (PATCH)', async () => {
         const payload = {
-            name: 'test name - updated',
-            description: 'test description - updated',
+            name: 'test name - updated by admin',
+            description: 'test description - updated by admin',
+            status: 1,
+        };
+        return request(app.getHttpServer())
+            .patch(`/todo/${itemId}`)
+            .send(payload)
+            .expect(200);
+    });
+
+    it('/normal-user/todo/:itemId (PATCH)', async () => {
+        const payload = {
+            name: 'test name - updated by normal user',
+            description: 'test description - updated by normal user',
             status: 1,
         };
         return request(app.getHttpServer())
